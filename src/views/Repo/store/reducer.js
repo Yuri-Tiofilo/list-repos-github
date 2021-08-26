@@ -3,14 +3,20 @@ import types from './types'
 
 const INITIAL_STATE = {
   isLoading: true,
-  repos: []
+  repo: null,
+  issues: []
 }
 
-const beginLoading = combineActions(types.SEARCH_REPOS)
+const beginLoading = combineActions(
+  types.SEARCH_REPO_INFO,
+  types.SEARCH_REPO_ISSUES
+)
 
 const stopLoading = combineActions(
-  types.SEARCH_REPOS_SUCCESS,
-  types.SEARCH_REPOS_FAIL
+  types.SEARCH_REPO_INFO_SUCCESS,
+  types.SEARCH_REPO_INFO_FAIL,
+  types.SEARCH_REPO_ISSUES_SUCCESS,
+  types.SEARCH_REPO_ISSUES_FAIL
 )
 
 const reducer = handleActions(
@@ -23,9 +29,14 @@ const reducer = handleActions(
       ...state,
       isLoading: false
     }),
-    [types.SEARCH_REPOS_SUCCESS]: (state, { payload: { data } }) => ({
+    [types.SEARCH_REPO_INFO_SUCCESS]: (state, { payload: { data } }) => ({
       ...state,
-      repos: data.items,
+      repo: data,
+      isLoading: false
+    }),
+    [types.SEARCH_REPO_ISSUES_SUCCESS]: (state, { payload: { data } }) => ({
+      ...state,
+      issues: data,
       isLoading: false
     }),
     [types.CLEAR_STATE]: () => INITIAL_STATE

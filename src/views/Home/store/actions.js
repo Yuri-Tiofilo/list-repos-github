@@ -4,14 +4,14 @@ export function clearState() {
   return { type: types.CLEAR_STATE }
 }
 
-export function searchMovies() {
+export function searchRepos({ term }) {
   return async dispatch => {
     try {
       const data = await dispatch({
-        type: types.SEARCH_MOVIES,
+        type: types.SEARCH_REPOS,
         payload: {
           request: {
-            url: '/',
+            url: `/search/repositories?q=${term}&page=1&per_page=6`,
             method: 'GET'
           }
         }

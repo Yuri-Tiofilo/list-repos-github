@@ -5,9 +5,7 @@ import { Container } from './styles'
 function Footer() {
   return (
     <Container>
-      <div>
-        <span>Desenvolvido por Yuri Tiofilo Silva</span>
-      </div>
+      <span>Git Explorer - by Yuri Silva</span>
     </Container>
   )
 }

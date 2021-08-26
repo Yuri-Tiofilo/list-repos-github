@@ -1,14 +1,14 @@
 import React from 'react'
 
-import { Container } from './styles'
+import { Container, LogoImage } from './styles'
+import Logo from '~/assets/logo.svg'
 
 function Header() {
   return (
     <Container>
-      <div>Header da aplicação</div>
-      <nav>
-        <a href="/page-one">link1</a>
-      </nav>
+      <a href="/">
+        <LogoImage src={Logo} alt="logo" />
+      </a>
     </Container>
   )
 }

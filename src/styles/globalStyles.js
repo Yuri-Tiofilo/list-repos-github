@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
+import gitHubBackground from '~/assets/background.svg'
 
 export default createGlobalStyle`
   * {
@@ -28,6 +29,11 @@ export default createGlobalStyle`
       font-size: 93.75%;
     }
   }
+  #root {
+    max-width: 960px;
+    margin:0 auto;
+    padding: 40px 20px;
+  }
 
   @media screen and (max-width: 768px) {
     html {
@@ -37,11 +43,16 @@ export default createGlobalStyle`
 
   body {
     background-color: var(--gray-900);
-    color: var(--white);
+    color: var(--black);
   }
 
   body, input, textarea, select, button {
     font: 400 1rem "Roboto", sans-serif;
+  }
+
+  body {
+    background: #f0f0f5 url(${gitHubBackground}) no-repeat 70% top;
+    -webkit-font-smoothing:antialiased !important;
   }
 
   button {
