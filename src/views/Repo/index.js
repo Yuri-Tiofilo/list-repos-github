@@ -17,7 +17,6 @@ function Repo() {
   const dispatch = useDispatch()
 
   const { repo, issues } = useShallowEqualSelector(state => state.details)
-  console.log(repo)
 
   useEffect(() => {
     dispatch(

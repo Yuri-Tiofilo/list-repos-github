@@ -7,7 +7,13 @@ import { Pagination } from '../Pagination'
 
 import { Container, ContainerNoRepo, TitleNoRepo, ImageNoRepo } from './styles'
 
-function ListRepos({ repos, pageSize, pageIndex }) {
+function ListRepos({
+  repos,
+  pageSize,
+  pageIndex,
+  onClickNext,
+  onClickPrevious
+}) {
   return (
     <>
       {repos.length !== 0 ? (
@@ -23,7 +29,12 @@ function ListRepos({ repos, pageSize, pageIndex }) {
               />
             ))}
           </Container>
-          <Pagination />
+
+          <Pagination
+            pageIndex={pageIndex}
+            onClickNext={() => onClickNext()}
+            onClickPrevious={() => onClickPrevious()}
+          />
         </>
       ) : (
         <ContainerNoRepo>
