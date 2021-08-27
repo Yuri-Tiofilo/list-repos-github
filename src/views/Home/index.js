@@ -13,6 +13,8 @@ import { Container, Title } from './styles'
 function Home() {
   const dispatch = useDispatch()
 
+  const [pageIndex, setPageIndex] = useState(1)
+
   const [valueSearch, setValueSearch] = useState('')
   const { repos: data } = useShallowEqualSelector(state => state.home)
 
@@ -22,13 +24,41 @@ function Home() {
       if (valueSearch !== '') {
         dispatch(
           searchRepos({
-            term: valueSearch
+            term: valueSearch,
+            page: pageIndex
           })
         )
       }
     },
     [dispatch, valueSearch]
   )
+
+  const setPageIndexAdd = useCallback(() => {
+    dispatch(
+      searchRepos({
+        term: valueSearch,
+        page: pageIndex
+      })
+    )
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+    setPageIndex(2)
+  }, [dispatch, pageIndex, valueSearch])
+  const setPageIndexRemove = useCallback(() => {
+    dispatch(
+      searchRepos({
+        term: valueSearch,
+        page: pageIndex
+      })
+    )
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+    setPageIndex(prevState => prevState - 1)
+  }, [dispatch, pageIndex, valueSearch])
 
   return (
     <Container>
@@ -42,7 +72,20 @@ function Home() {
         onClick={onClickSearch}
       />
       <Filters />
-      <ListRepos repos={data} />
+      <ListRepos
+        repos={data}
+        pageIndex={pageIndex}
+        onClickNext={() =>
+          setPageIndexAdd({
+            pagination: true
+          })
+        }
+        onClickPrevious={() =>
+          setPageIndexRemove({
+            pagination: true
+          })
+        }
+      />
     </Container>
   )
 }
