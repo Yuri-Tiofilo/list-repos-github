@@ -5,7 +5,7 @@ Site for access:
 <h3>Clone project</h3>
 
 ````
-git clone https://github.com/Yuri-Tiofilo/books-google.git
+git clone https://github.com/Yuri-Tiofilo/list-repos-github.git
 ````
 
 <h3>Install Dependencies</h3>
