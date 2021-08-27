@@ -35,3 +35,5 @@ yarn dev
 <img src="./images/image-2.png" alt="image 2">
 <img src="./images/image-3.png" alt="image 3">
 <img src="./images/image-4.png" alt="image 4">
+
+<strong>Thanks</strong>
