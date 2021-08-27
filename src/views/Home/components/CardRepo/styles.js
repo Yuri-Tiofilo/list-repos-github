@@ -38,12 +38,22 @@ export const Avatar = styled.img`
 export const TitleRepo = styled.strong`
   font-size: 20px;
   color: #3d3d4d;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  -webkit-box-orient: vertical;
 `
 
 export const Description = styled.p`
   font-size: 18px;
   color: #a8a8b3;
   margin-top: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  -webkit-box-orient: vertical;
 `
 export const IconMoreDetails = styled(FiChevronRight).attrs({
   size: 20
