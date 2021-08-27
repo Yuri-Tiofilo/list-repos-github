@@ -34,6 +34,7 @@ function Home() {
   )
 
   const setPageIndexAdd = useCallback(() => {
+    setPageIndex(pageIndex + 1)
     dispatch(
       searchRepos({
         term: valueSearch,
@@ -44,9 +45,10 @@ function Home() {
       top: 0,
       behavior: 'smooth'
     })
-    setPageIndex(2)
-  }, [dispatch, pageIndex, valueSearch])
+  }, [dispatch, pageIndex])
+
   const setPageIndexRemove = useCallback(() => {
+    setPageIndex(prevState => prevState - 1)
     dispatch(
       searchRepos({
         term: valueSearch,
@@ -57,8 +59,7 @@ function Home() {
       top: 0,
       behavior: 'smooth'
     })
-    setPageIndex(prevState => prevState - 1)
-  }, [dispatch, pageIndex, valueSearch])
+  }, [dispatch, pageIndex])
 
   return (
     <Container>

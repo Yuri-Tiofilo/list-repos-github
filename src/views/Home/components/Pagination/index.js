@@ -5,7 +5,10 @@ import { Container, ButtonNext, ButtonPrevious } from './styles'
 function Pagination({ onClickPrevious, onClickNext, pageIndex }) {
   return (
     <Container>
-      <ButtonPrevious onClick={() => onClickPrevious()}>
+      <ButtonPrevious
+        disabled={pageIndex === 1}
+        onClick={() => onClickPrevious()}
+      >
         Anterior
       </ButtonPrevious>
       <ButtonNext onClick={() => onClickNext()}>Próximo</ButtonNext>
