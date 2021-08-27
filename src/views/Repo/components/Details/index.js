@@ -18,7 +18,8 @@ function Details({ repository, issues }) {
           <strong>{repository.full_name}</strong>
           <p>{repository.description}</p>
           <p>
-            Link repositório: <a href={`${repository.url}`}>{repository.url}</a>
+            Link repositório:{' '}
+            <a href={`${repository.html_url}`}>{repository.html_url}</a>
           </p>
         </div>
       </header>
