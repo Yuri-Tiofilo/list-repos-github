@@ -1,6 +1,6 @@
 <h1>Git Explorer</h1>
 
-Site for access:
+Site for access: https://git-explorer-repos.netlify.app/
 
 <h3>Clone project</h3>
 
