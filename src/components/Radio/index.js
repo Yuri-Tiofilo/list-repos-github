@@ -1,9 +1,15 @@
 import React from 'react'
 
-// import { Container } from './styles';
+import { Container, IconCheck, IconNoCheck, Text } from './styles'
 
-function Radio() {
-  return <div>teste</div>
+function Radio({ label, check, onClick }) {
+  return (
+    <Container onClick={onClick}>
+      {check ? <IconCheck /> : <IconNoCheck />}
+
+      <Text>{label}</Text>
+    </Container>
+  )
 }
 
 export default Radio
