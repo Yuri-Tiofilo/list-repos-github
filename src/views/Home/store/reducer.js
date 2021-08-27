@@ -3,7 +3,8 @@ import types from './types'
 
 const INITIAL_STATE = {
   isLoading: true,
-  repos: []
+  repos: [],
+  url: ''
 }
 
 const beginLoading = combineActions(types.SEARCH_REPOS)
@@ -27,6 +28,10 @@ const reducer = handleActions(
       ...state,
       repos: data.items,
       isLoading: false
+    }),
+    [types.SET_URL_SEARCH]: (state, { url }) => ({
+      ...state,
+      url
     }),
     [types.CLEAR_STATE]: () => INITIAL_STATE
   },

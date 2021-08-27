@@ -4,9 +4,9 @@ import { useDispatch } from 'react-redux'
 import useShallowEqualSelector from '~/hooks/useShallowEqualSelector'
 import { SearchBar } from './components/SearchBar'
 import { ListRepos } from './components/ListRepos'
-import { Filters } from './components/Filters'
+// import { Filters } from './components/Filters'
 
-import { searchRepos } from './store/actions'
+import { searchRepos, setUrlSearch } from './store/actions'
 
 import { Container, Title } from './styles'
 
@@ -14,23 +14,40 @@ function Home() {
   const dispatch = useDispatch()
 
   const [pageIndex, setPageIndex] = useState(1)
+  const [valueUrl, setValueUrl] = useState('')
 
   const [valueSearch, setValueSearch] = useState('')
-  const { repos: data } = useShallowEqualSelector(state => state.home)
-
+  const { repos: data, url } = useShallowEqualSelector(state => state.home)
   const onClickSearch = useCallback(
     e => {
       e.preventDefault()
+      setValueUrl(url)
+      // console.log(url)
+      // if (url === '') {
+      //   dispatch(
+      //     setUrlSearch({
+      //       url: `/search/repositories?q=${valueSearch}&page=${pageIndex}&per_page=6`
+      //     })
+      //   )
+      // } else {
+      //   dispatch(
+      //     setUrlSearch({
+      //       url: `${url}/${valueSearch}/repos`
+      //     })
+      //   )
+      // }
+      // console.log(url)
       if (valueSearch !== '') {
         dispatch(
           searchRepos({
             term: valueSearch,
-            page: pageIndex
+            page: pageIndex,
+            url: `/search/repositories?q=${valueSearch}&page=${pageIndex}&per_page=6`
           })
         )
       }
     },
-    [dispatch, valueSearch]
+    [dispatch, valueSearch, url, valueUrl, setUrlSearch]
   )
 
   const setPageIndexAdd = useCallback(() => {
@@ -72,7 +89,7 @@ function Home() {
         }}
         onClick={onClickSearch}
       />
-      <Filters />
+      {/* <Filters /> */}
       <ListRepos
         repos={data}
         pageIndex={pageIndex}
