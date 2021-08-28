@@ -16,7 +16,7 @@ function ListRepos({
 }) {
   return (
     <>
-      {repos.length !== 0 ? (
+      {repos?.length !== 0 ? (
         <>
           <Container>
             {repos.map(repo => (

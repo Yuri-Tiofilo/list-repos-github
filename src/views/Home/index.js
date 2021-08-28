@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import useShallowEqualSelector from '~/hooks/useShallowEqualSelector'
 import { SearchBar } from './components/SearchBar'
 import { ListRepos } from './components/ListRepos'
-// import { Filters } from './components/Filters'
+import { Filters } from './components/Filters'
 
 import { searchRepos, setUrlSearch } from './store/actions'
 
@@ -14,41 +14,62 @@ function Home() {
   const dispatch = useDispatch()
 
   const [pageIndex, setPageIndex] = useState(1)
+  const [useFilters, setUseFilters] = useState(false)
   const [valueUrl, setValueUrl] = useState('')
-
   const [valueSearch, setValueSearch] = useState('')
+
   const { repos: data, url } = useShallowEqualSelector(state => state.home)
   const onClickSearch = useCallback(
     e => {
       e.preventDefault()
-      setValueUrl(url)
-      // console.log(url)
-      // if (url === '') {
-      //   dispatch(
-      //     setUrlSearch({
-      //       url: `/search/repositories?q=${valueSearch}&page=${pageIndex}&per_page=6`
-      //     })
-      //   )
-      // } else {
-      //   dispatch(
-      //     setUrlSearch({
-      //       url: `${url}/${valueSearch}/repos`
-      //     })
-      //   )
-      // }
-      // console.log(url)
       if (valueSearch !== '') {
-        dispatch(
-          searchRepos({
-            term: valueSearch,
-            page: pageIndex,
-            url: `/search/repositories?q=${valueSearch}&page=${pageIndex}&per_page=6`
-          })
-        )
+        if (!useFilters) {
+          dispatch(
+            searchRepos({
+              term: valueSearch,
+              page: pageIndex,
+              url: `/search/repositories?q=${valueSearch}&page=${pageIndex}&per_page=6`
+            })
+          )
+        } else {
+          const newUrl = `${valueUrl}/${valueSearch}/repos`
+          dispatch(
+            searchRepos({
+              term: valueSearch,
+              page: pageIndex,
+              url: newUrl
+            })
+          )
+        }
       }
     },
     [dispatch, valueSearch, url, valueUrl, setUrlSearch]
   )
+
+  const handleUseFilters = ({ filter = '' }) => {
+    if (filter === 'users') {
+      if (valueUrl !== '/users') {
+        setUseFilters(true)
+        setValueUrl('/users')
+      } else {
+        setUseFilters(false)
+        setValueUrl('')
+      }
+    } else if (filter === 'orgs') {
+      if (valueUrl !== '/orgs') {
+        setUseFilters(true)
+        setValueUrl('/orgs')
+      } else {
+        setUseFilters(false)
+        setValueUrl('')
+      }
+    } else if (filter === 'clean') {
+      setUseFilters(false)
+      setValueUrl('')
+    }
+  }
+
+  console.log(valueUrl)
 
   const setPageIndexAdd = useCallback(() => {
     setPageIndex(pageIndex + 1)
@@ -89,7 +110,15 @@ function Home() {
         }}
         onClick={onClickSearch}
       />
-      {/* <Filters /> */}
+      <Filters
+        onClickFilter={param => {
+          handleUseFilters({
+            filter: param
+          })
+        }}
+        useFilter={useFilters}
+      />
+
       <ListRepos
         repos={data}
         pageIndex={pageIndex}

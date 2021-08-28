@@ -1,70 +1,26 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { setUrlSearch } from '../../store/actions'
+import React, { useState, useEffect } from 'react'
+// import { useDispatch } from 'react-redux'
+// import { setUrlSearch } from '../../store/actions'
 
 import { Radio } from '~/components'
 
-import { Container } from './styles'
+import { Container, ButtonClose, IconClose } from './styles'
 
-function Filters() {
-  const dispatch = useDispatch()
+function Filters({ onClickFilter, useFilter }) {
+  // const dispatch = useDispatch()
 
-  const [valueUrl, setValueUrl] = useState('/')
+  // const [valueUrl, setValueUrl] = useState('/')
   const [filterUser, setFilterUser] = useState(false)
   const [filterLanguage, setFilterLanguage] = useState(false)
   const [filterOrganization, setFilterOrganization] = useState(false)
-  const handleFilterUser = () => {
-    setFilterUser(!filterUser)
-    setFilterLanguage(false)
-    setFilterOrganization(false)
 
-    if (filterUser) {
-      setValueUrl('/users')
-    } else {
-      setValueUrl('/')
+  useEffect(() => {
+    if (!useFilter) {
+      setFilterUser(false)
+      setFilterLanguage(false)
+      setFilterOrganization(false)
     }
-    dispatch(
-      setUrlSearch({
-        url: valueUrl
-      })
-    )
-  }
-
-  const handleFilterLanguage = () => {
-    setFilterUser(false)
-    setFilterLanguage(!filterLanguage)
-    setFilterOrganization(false)
-
-    if (filterLanguage) {
-      setValueUrl('/language')
-    } else {
-      setValueUrl('/')
-    }
-
-    dispatch(
-      setUrlSearch({
-        url: valueUrl
-      })
-    )
-  }
-
-  const handleFilterOrganization = () => {
-    setFilterUser(false)
-    setFilterLanguage(false)
-    setFilterOrganization(!filterOrganization)
-
-    if (filterOrganization) {
-      setValueUrl('/orgs')
-    } else {
-      setValueUrl('/')
-    }
-
-    dispatch(
-      setUrlSearch({
-        url: valueUrl
-      })
-    )
-  }
+  }, [useFilter])
 
   return (
     <Container>
@@ -72,23 +28,43 @@ function Filters() {
         label="Por usuário"
         check={filterUser}
         onClick={() => {
-          handleFilterUser()
+          setFilterUser(!filterUser)
+          setFilterLanguage(false)
+          setFilterOrganization(false)
+          onClickFilter('users')
         }}
       />
       <Radio
         label="Por Linguagem"
         check={filterLanguage}
         onClick={() => {
-          handleFilterLanguage()
+          setFilterUser(false)
+          setFilterLanguage(!filterLanguage)
+          setFilterOrganization(false)
+          onClickFilter('language')
         }}
       />
       <Radio
         label="Por organização"
         check={filterOrganization}
         onClick={() => {
-          handleFilterOrganization()
+          setFilterUser(false)
+          setFilterLanguage(false)
+          setFilterOrganization(!filterOrganization)
+          onClickFilter('orgs')
         }}
       />
+
+      {useFilter ? (
+        <ButtonClose
+          onClick={() => {
+            onClickFilter('clean')
+          }}
+        >
+          <IconClose />
+          <strong>Limpar filtro</strong>
+        </ButtonClose>
+      ) : null}
     </Container>
   )
 }

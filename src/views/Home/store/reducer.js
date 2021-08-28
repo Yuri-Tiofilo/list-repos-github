@@ -24,11 +24,21 @@ const reducer = handleActions(
       ...state,
       isLoading: false
     }),
-    [types.SEARCH_REPOS_SUCCESS]: (state, { payload: { data } }) => ({
-      ...state,
-      repos: data.items,
-      isLoading: false
-    }),
+    [types.SEARCH_REPOS_SUCCESS]: (state, { payload: { data } }) => {
+      if (data.items) {
+        return {
+          ...state,
+          repos: data.items,
+          isLoading: false
+        }
+      } else {
+        return {
+          ...state,
+          repos: data,
+          isLoading: false
+        }
+      }
+    },
     [types.SET_URL_SEARCH]: (state, { url }) => ({
       ...state,
       url
