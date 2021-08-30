@@ -68,9 +68,6 @@ function Home() {
       setValueUrl('')
     }
   }
-
-  console.log(valueUrl)
-
   const setPageIndexAdd = useCallback(() => {
     setPageIndex(pageIndex + 1)
     dispatch(
