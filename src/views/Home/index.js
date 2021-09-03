@@ -46,7 +46,7 @@ function Home() {
     [dispatch, valueSearch, url, valueUrl, setUrlSearch]
   )
 
-  const handleUseFilters = ({ filter }) => {
+  const handleUseFilters = ({ filter = '' }) => {
     if (filter === 'users') {
       if (valueUrl !== '/users') {
         setUseFilters(true)
